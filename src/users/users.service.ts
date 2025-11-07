@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './dto/user.dto';
 import { handleError } from 'src/shared/utils/handleError';
+import { DeleteUserDto } from './dto/delete-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -17,9 +18,8 @@ export class UsersService {
     try {
       const newUser = this.userRepository.create(createUserDto);
       const savedUser = await this.userRepository.save(newUser);
-      const userEntity = new User(savedUser);
 
-      return userEntity;
+      return new User(savedUser);
     } catch (error: unknown) {
       handleError(error, 'Cant create user', HttpStatus.BAD_REQUEST);
     }
@@ -78,7 +78,11 @@ export class UsersService {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
 
-      return { isDeleted: true, deletedId: id, message: 'User deleted' };
+      return new DeleteUserDto({
+        isDeleted: true,
+        deletedId: id,
+        message: 'User deleted',
+      });
     } catch (error: unknown) {
       handleError(error, 'Cant delete user by id' + id, HttpStatus.NOT_FOUND);
     }
