@@ -22,7 +22,6 @@
     "migration:generate": "npm run typeorm -- migration:generate",
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert"
-    
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -31,6 +30,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.1",
     "@nestjs/typeorm": "^11.0.0",
+    "class-validator": "^0.14.2",
     "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
     "pg": "^8.16.3",

@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { AppLanguageEnum, GenderEnum, RoleEnum } from 'src/types';
 import {
   BaseEntity,
@@ -14,66 +13,48 @@ import { CategoryEntity } from './category.entity';
 @Entity('users')
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
-  @ApiProperty({ example: 1, description: 'Unique identificatior' })
   id: number;
 
-  @Column()
-  @ApiProperty({ example: 'John', description: 'User first name' })
+  @Column({ nullable: true })
   firstName: string;
 
-  @Column()
-  @ApiProperty({ example: 'Doe', description: 'User last name' })
+  @Column({ nullable: true })
   lastName: string;
 
-  @Column()
-  @ApiProperty({ example: '123456', description: 'User password' })
+  @Column({ nullable: false })
   passwordHash: string;
 
-  @Column()
-  @ApiProperty({ example: 'V0bG6@example.com', description: 'User email' })
+  @Column({ nullable: false, unique: true })
   email: string;
 
-  @Column({ enum: RoleEnum, default: RoleEnum.USER })
-  @ApiProperty({ example: 'user', description: 'User role' })
+  @Column({ type: 'enum', enum: RoleEnum, default: RoleEnum.USER })
   role: RoleEnum;
 
   @CreateDateColumn({ name: 'created_at' })
-  @ApiProperty({ example: '2023-01-01', description: 'User creation date' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  @ApiProperty({ example: '2023-01-01', description: 'User update date' })
   updatedAt: Date;
 
   @Column({ default: false })
-  @ApiProperty({ example: true, description: 'User is verified' })
   isVerified: boolean;
 
-  @Column({ enum: AppLanguageEnum, default: AppLanguageEnum.UA })
-  @ApiProperty({ example: 'ua', description: 'User language' })
+  @Column({ type: 'enum', enum: AppLanguageEnum, default: AppLanguageEnum.UA })
   appLanguage: AppLanguageEnum;
 
   @Column({ nullable: true })
-  @ApiProperty({ example: 'About me', description: 'User about me' })
   aboutMe: string;
 
   @Column({ nullable: true })
-  @ApiProperty({ example: '+380123456789', description: 'User phone' })
   phone: string;
 
-  @Column()
-  @ApiProperty({ example: '2023-01-01', description: 'User birth date' })
+  @Column({ nullable: true })
   birthDate: Date;
 
-  @Column({ default: GenderEnum.OTHER })
-  @ApiProperty({ example: 'male', description: 'User gender' })
+  @Column({ type: 'enum', enum: GenderEnum, default: GenderEnum.OTHER })
   gender: GenderEnum;
 
   @Column({ nullable: true })
-  @ApiProperty({
-    example: 'my-avatar.jpg',
-    description: 'User avatar',
-  })
   avatar: string;
 
   @OneToMany(() => CategoryEntity, (category) => category.user, {

@@ -19,4 +19,4 @@ async function bootstrap() {
     console.log(`Server started on  http://localhost:${PORT}`),
   );
 }
-bootstrap().catch(console.error);
+bootstrap().catch(console.log);
